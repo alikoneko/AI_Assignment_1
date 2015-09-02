@@ -87,7 +87,7 @@ namespace AI_Assignment_1
                     moves.Add(state);
                 }
             }
-
+            
             return moves;
         }
 

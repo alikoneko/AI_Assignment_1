@@ -19,7 +19,6 @@ namespace AI_Assignment_1
         {
             if (board.board_complete())
             {
-                solution.Push(board);
                 return true;
             }
             foreach (Board move in board.next_states())
@@ -33,6 +32,7 @@ namespace AI_Assignment_1
 
             return false;
         }
+
 
     }
 }
