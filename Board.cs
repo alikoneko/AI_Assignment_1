@@ -24,15 +24,6 @@ namespace AI_Assignment_1
         private int size;
         private Point last_move;
 
-        /*
-         *  I did a lot of research on this problem before jumping in. In my research, I did find that there are board sizes (n = 3i + 1) 
-         *  that are not solvable for ALL possible start points on a board. These tend to be numbers that are not multiples of 3, with points
-         *  x, y, such that (x + y) % 3 == 0. I decided to add a control for this in, as what's the point of searching for a solution that does
-         *  not exist. See the following URL for more information. http://home.comcast.net/~gibell/pegsolitaire/tindex.html#boards
-         *  This will likely be included in the driver used for the UI. Time permitting, I might make this more than a console application
-         *  Also, in that link, there's a way to check to see if a solution state, ie: a peg finishing IN a given spot is infact valid. I will
-         *  probably be using that as well. 
-         */
         public Board(int n, int start_x, int start_y)
         {
             this.size = n;
@@ -69,6 +60,11 @@ namespace AI_Assignment_1
         public bool board_complete()
         {
             return pegs.Count(d => d.Value == true) == 1;
+        }
+
+        public bool board_complete(Point end)
+        {
+            return (pegs.Count(d =>d.Value == true) == 1) && (pegs[end] == true);
         }
 
         public List<Board> next_states()
