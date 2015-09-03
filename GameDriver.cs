@@ -75,26 +75,30 @@ namespace AI_Assignment_1
             tokens = raw.Split(' ');
             setup = Array.ConvertAll(tokens, int.Parse);
 
-            if (CheckValid(setup[0], setup[1], setup[2]) && CheckValid(setup[0], setup[1], setup[2], setup[3], setup[4]))
+            if (CheckValid(setup[0], setup[1], setup[2], setup[3], setup[4]) && CheckValid(setup[0], setup[1], setup[2]))
             {
                 System.Console.WriteLine("Solveable!");
                 Solve(setup);
             }
-            if (CheckValid(setup[0], setup[1], setup[2])) //if there IS a general solution, solve for it.
+            else
             {
                 System.Console.WriteLine("Unsolveable!");
-                System.Console.WriteLine("Solve for the general solution? y/n");
-                solve_gen = System.Console.ReadKey().KeyChar;
-                SolveGeneral(setup[0], setup[1], setup[2]);
+                if (CheckValid(setup[0], setup[1], setup[2])) //if there IS a general solution, solve for it.
+                {
+                    
+                    System.Console.WriteLine("Solve for the general solution? y/n");
+                    solve_gen = System.Console.ReadKey().KeyChar;
+                    SolveGeneral(setup[0], setup[1], setup[2]);
+                }
             }
-
             System.Console.WriteLine("Go again? y/n  or q to quit");
             again = System.Console.ReadKey().KeyChar;
             if (again == 'y')
             {
+                System.Console.Clear();
                 Start();
             }
-            
+
         }
 
         private void SolveGeneral(int size, int start_x, int start_y)
