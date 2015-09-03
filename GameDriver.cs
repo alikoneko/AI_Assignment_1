@@ -40,7 +40,7 @@ namespace AI_Assignment_1
          */
         private bool CheckValid(int size, int start_x, int start_y, int finish_x, int finish_y)
         {
-            if (((size % 3 == 1 && (start_x + start_y) % 3 != 0
+            if (((((size % 3 == 1) && ((start_x + start_y) % 3 != 0))
                 && (start_x + start_y + finish_x + finish_y) % 3 == 0))
                 || (size % 3 != 1 && ((start_x + start_y) % 3 == (finish_x + finish_y) % 3))) //time permitting, find a way to reduce or refactor this to something more understandable.
             {
@@ -106,7 +106,7 @@ namespace AI_Assignment_1
             System.Console.WriteLine("Solving...");
             Board board = new Board(size, start_x, start_y);
             DFS dfs = new DFS();
-            PrintSolution(dfs.search(board));
+            PrintSolution(dfs.Search(board));
         }
 
         private void Solve(int[] setup)
@@ -115,7 +115,7 @@ namespace AI_Assignment_1
             Point end_point = new Point(setup[3], setup[4]);
             Board board = new Board(setup[0], setup[1], setup[2]);
             DFS dfs = new DFS();
-            PrintSolution(dfs.search(board, end_point));
+            PrintSolution(dfs.Search(board, end_point));
         }
 
         private void PrintSolution(Stack<Board> solution)

@@ -27,7 +27,7 @@ namespace AI_Assignment_1
         public Board(int n, int start_x, int start_y)
         {
             this.size = n;
-            this.pegs = construct_triangle_board(n);
+            this.pegs = ConstructTriangleBoard(n);
             this.last_move = new Point(start_x, start_y);
             this.pegs[last_move] = false;
         }
@@ -42,7 +42,7 @@ namespace AI_Assignment_1
             }
         }
 
-        private Dictionary<Point, bool> construct_triangle_board(int n)
+        private Dictionary<Point, bool> ConstructTriangleBoard(int n)
         {
             Dictionary<Point, bool> triangle_board = new Dictionary<Point, bool>();
 
@@ -57,31 +57,31 @@ namespace AI_Assignment_1
                 return triangle_board;
         }
 
-        public bool board_complete()
+        public bool BoardComplete()
         {
             return pegs.Count(d => d.Value == true) == 1;
         }
 
-        public bool board_complete(Point end)
+        public bool BoardComplete(Point end)
         {
             return (pegs.Count(d =>d.Value == true) == 1) && (pegs[end] == true);
         }
 
-        public List<Board> next_states()
+        public List<Board> NextStates()
         {
             List<Board> states = new List<Board>();
 
-            states.AddRange(try_states(last_move));
+            states.AddRange(TryStates(last_move));
 
             foreach (KeyValuePair<Point, bool> entry in pegs.Where(d => d.Value == false).Where(d => d.Key != last_move))
             {
-                states.AddRange(try_states(entry.Key));
+                states.AddRange(TryStates(entry.Key));
             }
 
             return states;
         }
 
-        private List<Board> try_states(Point start)
+        private List<Board> TryStates(Point start)
         {
             List<Board> moves = new List<Board>();
             foreach (Point move in move_options)
