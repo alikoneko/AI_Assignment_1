@@ -12,7 +12,7 @@ namespace AI_Assignment_1
         {
             System.Console.WriteLine("Hello World");
 
-            Board board = new Board(8, 3, 3);
+            Board board = new Board(10, 2, 0);
 
             System.Console.WriteLine(board);
             DFS dfs = new DFS();
@@ -21,6 +21,7 @@ namespace AI_Assignment_1
             foreach (Board sol in solution)
             {
                 System.Console.WriteLine(sol);
+                System.Threading.Thread.Sleep(500);
             }
 
 

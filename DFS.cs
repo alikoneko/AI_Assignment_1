@@ -8,6 +8,9 @@ namespace AI_Assignment_1
 {
     class DFS
     {
+        /*
+        * Recursively DFS's
+        */
         public Stack<Board> search(Board board)
         {
             Stack<Board> solution = new Stack<Board>();
@@ -15,10 +18,11 @@ namespace AI_Assignment_1
             return solution;
         }
 
+       
         private bool search(Board board, Stack<Board> solution)
         {
-            System.Console.WriteLine(board);
-            System.Threading.Thread.Sleep(50);
+            //System.Console.WriteLine(board);
+            //System.Threading.Thread.Sleep(500);
             if (board.board_complete())
             {
                 return true;

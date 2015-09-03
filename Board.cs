@@ -10,7 +10,7 @@ namespace AI_Assignment_1
 {
     class Board
     {
-        private static List<Point> MOVES = new List<Point>
+        private List<Point> move_options = new List<Point>
         {
             new Point(1,0),
             new Point(0, -1),
@@ -22,12 +22,23 @@ namespace AI_Assignment_1
 
         private Dictionary<Point, bool> pegs;
         private int size;
+        private Point last_move;
 
+        /*
+         *  I did a lot of research on this problem before jumping in. In my research, I did find that there are board sizes (n = 3i + 1) 
+         *  that are not solvable for ALL possible start points on a board. These tend to be numbers that are not multiples of 3, with points
+         *  x, y, such that (x + y) % 3 == 0. I decided to add a control for this in, as what's the point of searching for a solution that does
+         *  not exist. See the following URL for more information. http://home.comcast.net/~gibell/pegsolitaire/tindex.html#boards
+         *  This will likely be included in the driver used for the UI. Time permitting, I might make this more than a console application
+         *  Also, in that link, there's a way to check to see if a solution state, ie: a peg finishing IN a given spot is infact valid. I will
+         *  probably be using that as well. 
+         */
         public Board(int n, int start_x, int start_y)
         {
             this.size = n;
             this.pegs = construct_triangle_board(n);
-            this.pegs[new Point(start_x, start_y)] = false;
+            this.last_move = new Point(start_x, start_y);
+            this.pegs[last_move] = false;
         }
 
         private Board(Board source)
@@ -64,18 +75,20 @@ namespace AI_Assignment_1
         {
             List<Board> states = new List<Board>();
 
-            foreach (KeyValuePair<Point, bool> entry in pegs.Where(d => d.Value == false))
+            states.AddRange(try_states(last_move));
+
+            foreach (KeyValuePair<Point, bool> entry in pegs.Where(d => d.Value == false).Where(d => d.Key != last_move))
             {
-                states.AddRange(GetMoves(entry.Key));
+                states.AddRange(try_states(entry.Key));
             }
 
             return states;
         }
 
-        private List<Board> GetMoves(Point start)
+        private List<Board> try_states(Point start)
         {
             List<Board> moves = new List<Board>();
-            foreach (Point move in MOVES)
+            foreach (Point move in move_options)
             {
                 Point move_a = new Point(start.X + move.X, start.Y + move.Y);
                 Point move_b = new Point(start.X + (move.X * 2), start.Y + (move.Y * 2));
@@ -85,6 +98,9 @@ namespace AI_Assignment_1
                     state.pegs[start] = true;
                     state.pegs[move_a] = false;
                     state.pegs[move_b] = false;
+                    state.last_move = move_b;
+                    state.move_options.Remove(move);
+                    state.move_options.Insert(0, move);
                     moves.Add(state);
                 }
             }
