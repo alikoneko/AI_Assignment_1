@@ -12,13 +12,14 @@ namespace AI_Assignment_1
     {
         private static List<Point> MOVES = new List<Point>
         {
-            new Point(-1, -1),
+            new Point(1,0),
+            new Point(0, -1),
+            new Point(1, 1),
             new Point(-1, 0),
             new Point(0, 1),
-            new Point(1, 1),
-            new Point(1,0),
-            new Point(0,-1)
+            new Point(-1, -1),
         };
+
         private Dictionary<Point, bool> pegs;
         private int size;
 
@@ -121,7 +122,7 @@ namespace AI_Assignment_1
             }
 
            return return_string;
-        }
+        } 
 
     }
 }

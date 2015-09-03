@@ -17,6 +17,8 @@ namespace AI_Assignment_1
 
         private bool search(Board board, Stack<Board> solution)
         {
+            System.Console.WriteLine(board);
+            System.Threading.Thread.Sleep(50);
             if (board.board_complete())
             {
                 return true;
