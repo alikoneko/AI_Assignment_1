@@ -27,7 +27,7 @@ namespace AI_Assignment_1
 
 
             GameDriver game = new GameDriver();
-            game.StartGame();
+            game.Start();
 
 
 
