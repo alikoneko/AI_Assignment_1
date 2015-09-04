@@ -22,7 +22,7 @@ namespace AI_Assignment_1
         private bool Search(Board board, Stack<Board> solution)
         {
             //System.Console.WriteLine(board);
-            //System.Threading.Thread.Sleep(500);
+            //System.Threading.Thread.Sleep(50);
             if (board.BoardComplete())
             {
                 return true;
@@ -52,8 +52,6 @@ namespace AI_Assignment_1
 
         private bool Search(Board board, Stack<Board> solution, Point end)
         {
-            //System.Console.WriteLine(board);
-            //System.Threading.Thread.Sleep(500);
             if (board.BoardComplete(end))
             {
                 return true;

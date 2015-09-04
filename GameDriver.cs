@@ -23,7 +23,7 @@ namespace AI_Assignment_1
         */
         private bool CheckValid(int size, int start_x, int start_y)
         {
-            if (((size % 3 == 1) && ((start_x + start_y) % 3) == 0))
+            if ((size % 3 == 1) && (((start_x + start_y) % 3) == 0))
             {
                 return false;
             }
@@ -42,7 +42,7 @@ namespace AI_Assignment_1
         {
             if (((((size % 3 == 1) && ((start_x + start_y) % 3 != 0))
                 && (start_x + start_y + finish_x + finish_y) % 3 == 0))
-                || (size % 3 != 1 && ((start_x + start_y) % 3 == (finish_x + finish_y) % 3))) //time permitting, find a way to reduce or refactor this to something more understandable.
+                || ((size % 3 != 1 && ((start_x + start_y) % 3 == (finish_x + finish_y) % 3)))) //time permitting, find a way to reduce or refactor this to something more understandable.
             {
                 return true;
             }
@@ -85,7 +85,7 @@ namespace AI_Assignment_1
                 System.Console.WriteLine("Unsolveable!");
                 if (CheckValid(setup[0], setup[1], setup[2])) //if there IS a general solution, solve for it.
                 {
-                    
+
                     System.Console.WriteLine("Solve for the general solution? y/n");
                     solve_gen = System.Console.ReadKey().KeyChar;
                     SolveGeneral(setup[0], setup[1], setup[2]);
