@@ -13,7 +13,7 @@ namespace AI_Assignment_1
         {
             System.Console.WriteLine("Hello World");
 
-            Board board = new Board(12, 0, 0);
+            Board board = new Board(6, 0, 0);
 
             System.Console.WriteLine(board);
             DFS dfs = new DFS();

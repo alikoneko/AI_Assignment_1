@@ -81,6 +81,7 @@ namespace AI_Assignment_1
             return states;
         }
 
+        
         private List<Board> TryStates(Point start)
         {
             List<Board> moves = new List<Board>();
