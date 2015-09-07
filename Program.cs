@@ -13,22 +13,22 @@ namespace AI_Assignment_1
         {
             System.Console.WriteLine("Hello World");
 
-            Board board = new Board(6, 0, 0);
+            //Board board = new Board(8, 2, 0);
 
-            System.Console.WriteLine(board);
-            DFS dfs = new DFS();
-            Stack<Board> solution = dfs.Search(board);
-            System.Console.WriteLine("Search Complete!");
+            //System.Console.WriteLine(board);
+            //DFS dfs = new DFS();
+            //Stack<Board> solution = dfs.Search(board);
+            //System.Console.WriteLine("Search Complete!");
 
-            foreach (Board sol in solution)
-            {
-                System.Console.WriteLine(sol);
-                System.Threading.Thread.Sleep(500);
-            }
+            //foreach (Board sol in solution)
+            //{
+            //    System.Console.WriteLine(sol);
+            //    System.Threading.Thread.Sleep(500);
+            //}
 
 
-            //GameDriver game = new GameDriver();
-            //game.Start();
+            GameDriver game = new GameDriver();
+            game.Start();
 
 
 
