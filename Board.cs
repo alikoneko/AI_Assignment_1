@@ -20,6 +20,8 @@ namespace AI_Assignment_1
             new Point(-1, -1),
         };
 
+        private HashSet<Point> highlighted_pegs;
+
         private Dictionary<Point, bool> pegs;
         private int size;
         private Point last_move;
@@ -37,6 +39,8 @@ namespace AI_Assignment_1
 
                 }
             }
+
+            this.highlighted_pegs = new HashSet<Point>();
         }
 
         private Board(Board source)
@@ -47,6 +51,8 @@ namespace AI_Assignment_1
             {
                 this.pegs.Add(entry.Key, entry.Value);
             }
+
+            this.highlighted_pegs = new HashSet<Point>();
         }
 
         public bool OnBoard(Point position)
@@ -95,8 +101,11 @@ namespace AI_Assignment_1
                 {
                     Board state = new Board(this);
                     state.pegs[start] = true;
+                    state.highlighted_pegs.Add(start);
                     state.pegs[move_a] = false;
+                    state.highlighted_pegs.Add(move_a);
                     state.pegs[move_b] = false;
+                    state.highlighted_pegs.Add(move_b);
                     state.last_move = move_b;
                     state.move_options.Remove(move);
                     state.move_options.Insert(0, move);
@@ -147,11 +156,11 @@ namespace AI_Assignment_1
                     Point point = new Point(x, y);
                     if (pegs[point] == true)
                     {
-                        return_string += "o ";
+                        return_string += highlighted_pegs.Contains(point) ? "* " : "o ";
                     }
                     else
                     {
-                        return_string += "_ ";
+                        return_string += highlighted_pegs.Contains(point) ? ". " : "_ ";
                     }
                 }
 

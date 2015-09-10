@@ -11,11 +11,12 @@ namespace AI_Assignment_1
     {
         static void Main(string[] args)
         {
-            GameDriver game = new GameDriver();
-            game.Setup();
-            game.Run();
-
-            System.Console.ReadKey();
+            while (true)
+            {
+                GameDriver game = new GameDriver();
+                game.Setup();
+                game.Run();
+            }
         }
     }
 }

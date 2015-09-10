@@ -49,7 +49,7 @@ namespace AI_Assignment_1
             {
                 System.Console.WriteLine("Current State of Board:");
                 System.Console.WriteLine(board);
-                System.Console.WriteLine("Enter a pair to flip, X,Y: where 0,0 is apex, and 1,0 is second row first peg, or nothing to accept");
+                System.Console.WriteLine("Enter a pair to flip, X,Y: where 0,0 is apex,\n and 1,0 is second row first peg,\n or enter to accept");
                 string input = System.Console.ReadLine();
                 if (input.Length == 0)
                 {
@@ -99,7 +99,7 @@ namespace AI_Assignment_1
                 foreach (Board state in solution)
                 {
                     System.Console.WriteLine(state);
-                    System.Threading.Thread.Sleep(50);
+                    System.Threading.Thread.Sleep(200);
                 }
             }
         }
