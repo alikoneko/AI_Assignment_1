@@ -88,12 +88,19 @@ namespace AI_Assignment_1
 
         private void PrintSolution(Stack<Board> solution)
         {
-            System.Console.WriteLine("SOLVED!");
-            System.Console.WriteLine("Now with 1980's animation!");
-            foreach (Board state in solution)
+            if (solution.Count == 0)
             {
-                System.Console.WriteLine(state);
-                System.Threading.Thread.Sleep(50);
+                System.Console.WriteLine("Unsolvable!");
+            }
+            else
+            {
+                System.Console.WriteLine("SOLVED!");
+                System.Console.WriteLine("Now with 1980's animation!");
+                foreach (Board state in solution)
+                {
+                    System.Console.WriteLine(state);
+                    System.Threading.Thread.Sleep(50);
+                }
             }
         }
 
