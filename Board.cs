@@ -24,12 +24,10 @@ namespace AI_Assignment_1
         private int size;
         private Point last_move;
 
-        public Board(int n, int start_x, int start_y)
+        public Board(int n, bool initial_value)
         {
             this.size = n;
-            this.pegs = ConstructTriangleBoard(n);
-            this.last_move = new Point(start_x, start_y);
-            this.pegs[last_move] = false;
+            this.pegs = ConstructTriangleBoard(n, initial_value);
         }
 
         private Board(Board source)
@@ -42,7 +40,7 @@ namespace AI_Assignment_1
             }
         }
 
-        private Dictionary<Point, bool> ConstructTriangleBoard(int n)
+        private Dictionary<Point, bool> ConstructTriangleBoard(int n, bool initial_value)
         {
             Dictionary<Point, bool> triangle_board = new Dictionary<Point, bool>();
 
@@ -50,11 +48,27 @@ namespace AI_Assignment_1
             {
                 for (int y = 0; y <= x; y++)
                 {
-                    triangle_board.Add(new Point(x, y), true);
+                    triangle_board.Add(new Point(x, y), initial_value);
 
                 }
             }
-                return triangle_board;
+            
+            return triangle_board;
+        }
+
+        public bool OnBoard(Point position)
+        {
+            return pegs.ContainsKey(position);
+        }
+
+        public bool Toggle(Point position)
+        {
+            if (OnBoard(position))
+            {
+                pegs[position] = !pegs[position];
+                return pegs[position];
+            }
+            throw new InvalidPositionException();
         }
 
         public bool BoardComplete()
