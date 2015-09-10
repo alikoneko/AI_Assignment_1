@@ -9,6 +9,14 @@ namespace AI_Assignment_1
 {
     class GameDriver
     {
+        private bool OnBoard(int size, int x, int y)
+        {
+            if (x > size - 1 || y > x)
+            {
+                return false;
+            }
+            return true;
+        }
         /*
         *  I did a lot of research on this problem before jumping in. In my research, I did find that there are board sizes (n = 3i + 1) 
         *  that are not solvable for ALL possible start points on a board. These tend to be numbers that are not multiples of 3, with points
@@ -42,7 +50,7 @@ namespace AI_Assignment_1
         {
             if (((((size % 3 == 1) && ((start_x + start_y) % 3 != 0))
                 && (start_x + start_y + finish_x + finish_y) % 3 == 0))
-                || ((size % 3 != 1 && ((start_x + start_y) % 3 == (finish_x + finish_y) % 3)))) //time permitting, find a way to reduce or refactor this to something more understandable.
+                || ((size % 3 != 1 && ((start_x + start_y) % 3 == (finish_x + finish_y) % 3))))
             {
                 return true;
             }
@@ -59,6 +67,8 @@ namespace AI_Assignment_1
             System.Console.WriteLine(" So, for first element of the 2nd row,\nwould be (1,0) using my coordinate system. (0, 0) will be at the apex of the ");
             System.Console.WriteLine(" triangle. Some positions are easier to solve for than others! Now, with n = 7, there are some positions where the puzzle is just not");
             System.Console.WriteLine("solvable. I have included this bit of error checking in my solution. No point in this churning away if there's no solution.");
+            System.Console.WriteLine("This will solve ALL 5's and some 6's in a matter of seconds, most 6's in minutes, and most 7's at worst, overnight.");
+            System.Console.WriteLine("8 is where it slows down massively.");
 
             Setup();
 
@@ -77,26 +87,41 @@ namespace AI_Assignment_1
             tokens = raw.Split(' ');
             setup = Array.ConvertAll(tokens, int.Parse);
 
-            if (CheckValid(setup[0], setup[1], setup[2], setup[3], setup[4]) && CheckValid(setup[0], setup[1], setup[2]))
+            if (OnBoard(setup[0], setup[1], setup[2]) && OnBoard(setup[0], setup[3], setup[4]))
             {
-                System.Console.WriteLine("Solveable!");
-                Solve(setup);
+
+                if (CheckValid(setup[0], setup[1], setup[2], setup[3], setup[4]) && CheckValid(setup[0], setup[1], setup[2]))
+                {
+                    System.Console.WriteLine("Solveable!");
+                    Solve(setup);
+                }
+                else
+                {
+                    System.Console.WriteLine("Unsolveable!");
+                    if (CheckValid(setup[0], setup[1], setup[2])) //if there IS a general solution, solve for it.
+                    {
+                        System.Console.WriteLine("Solve for the general solution? y/n");
+                        solve_gen = System.Console.ReadKey().KeyChar;
+                        SolveGeneral(setup[0], setup[1], setup[2]);
+                    }
+                }
+                while (again != 'q')
+                {
+                    System.Console.WriteLine("Go again? y/n  or q to quit");
+                    again = Char.ToLower(System.Console.ReadKey().KeyChar);
+
+                    if (again == 'y')
+                    {
+                        System.Console.Clear();
+                        Start();
+                    }
+                    if (again == 'n')
+                        break;
+                }
             }
             else
             {
-                System.Console.WriteLine("Unsolveable!");
-                if (CheckValid(setup[0], setup[1], setup[2])) //if there IS a general solution, solve for it.
-                {
-                    System.Console.WriteLine("Solve for the general solution? y/n");
-                    solve_gen = System.Console.ReadKey().KeyChar;
-                    SolveGeneral(setup[0], setup[1], setup[2]);
-                }
-            }
-            System.Console.WriteLine("Go again? y/n  or q to quit");
-            again = System.Console.ReadKey().KeyChar;
-            if (again == 'y')
-            {
-                System.Console.Clear();
+                System.Console.WriteLine("Start or end point not on board, returning to start");
                 Start();
             }
 
@@ -121,11 +146,12 @@ namespace AI_Assignment_1
 
         private void PrintSolution(Stack<Board> solution)
         {
+            System.Console.WriteLine("SOLVED!");
             System.Console.WriteLine("Now with 1980's animation!");
             foreach (Board state in solution)
             {
                 System.Console.WriteLine(state);
-                System.Threading.Thread.Sleep(100);
+                System.Threading.Thread.Sleep(50);
             }
         }
 
