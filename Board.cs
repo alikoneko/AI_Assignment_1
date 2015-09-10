@@ -27,7 +27,16 @@ namespace AI_Assignment_1
         public Board(int n, bool initial_value)
         {
             this.size = n;
-            this.pegs = ConstructTriangleBoard(n, initial_value);
+            this.pegs = new Dictionary<Point, bool>();
+
+            for (int x = 0; x < n; x++)
+            {
+                for (int y = 0; y <= x; y++)
+                {
+                    pegs.Add(new Point(x, y), initial_value);
+
+                }
+            }
         }
 
         private Board(Board source)
@@ -38,22 +47,6 @@ namespace AI_Assignment_1
             {
                 this.pegs.Add(entry.Key, entry.Value);
             }
-        }
-
-        private Dictionary<Point, bool> ConstructTriangleBoard(int n, bool initial_value)
-        {
-            Dictionary<Point, bool> triangle_board = new Dictionary<Point, bool>();
-
-            for (int x = 0; x < n; x++)
-            {
-                for (int y = 0; y <= x; y++)
-                {
-                    triangle_board.Add(new Point(x, y), initial_value);
-
-                }
-            }
-            
-            return triangle_board;
         }
 
         public bool OnBoard(Point position)
@@ -71,31 +64,25 @@ namespace AI_Assignment_1
             throw new InvalidPositionException();
         }
 
-        public bool BoardComplete()
+        public int PegCount(bool value)
         {
-            return pegs.Count(d => d.Value == true) == 1;
-        }
-
-        public bool BoardComplete(Point end)
-        {
-            return (pegs.Count(d =>d.Value == true) == 1) && (pegs[end] == true);
+            return pegs.Count(d => d.Value == value);
         }
 
         public List<Board> NextStates()
         {
             List<Board> states = new List<Board>();
-
-            states.AddRange(TryStates(last_move));
-
+            if (last_move != null)
+            {
+                states.AddRange(TryStates(last_move));
+            }
             foreach (KeyValuePair<Point, bool> entry in pegs.Where(d => d.Value == false).Where(d => d.Key != last_move))
             {
                 states.AddRange(TryStates(entry.Key));
             }
-
             return states;
         }
 
-        
         private List<Board> TryStates(Point start)
         {
             List<Board> moves = new List<Board>();
@@ -103,7 +90,8 @@ namespace AI_Assignment_1
             {
                 Point move_a = new Point(start.X + move.X, start.Y + move.Y);
                 Point move_b = new Point(start.X + (move.X * 2), start.Y + (move.Y * 2));
-                if (pegs.ContainsKey(move_b) && pegs[move_a] && pegs[move_b]) 
+
+                if (pegs.ContainsKey(move_b) && pegs[move_a] && pegs[move_b])
                 {
                     Board state = new Board(this);
                     state.pegs[start] = true;
@@ -115,8 +103,30 @@ namespace AI_Assignment_1
                     moves.Add(state);
                 }
             }
-            
+
             return moves;
+        }
+
+        public bool MatchState(Board board)
+        {
+            if (pegs.Count != board.pegs.Count)
+            {
+                return false;
+            }
+
+            foreach (KeyValuePair<Point, bool> entry in pegs)
+            {
+                if (!board.pegs.ContainsKey(entry.Key))
+                {
+                    return false;
+                }
+                if (board.pegs[entry.Key] != entry.Value)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /*
@@ -148,8 +158,8 @@ namespace AI_Assignment_1
                 return_string += "\n";
             }
 
-           return return_string;
+            return return_string;
         }
-
+       
     }
 }
