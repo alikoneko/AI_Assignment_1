@@ -56,7 +56,9 @@ namespace AI_Assignment_1
 
             System.Console.WriteLine("Please enter the size of the board,\nstart x position, and start position y,\nas well as end position x and y, All seperated by spaces.");
             System.Console.WriteLine("Please note that X starts at 0, and corresponds to the row,\n and y corresponds to the row.");
-            System.Console.WriteLine(" So, for first element of the 2nd row,\nwould be (1,0) using my coordinate system.");
+            System.Console.WriteLine(" So, for first element of the 2nd row,\nwould be (1,0) using my coordinate system. (0, 0) will be at the apex of the ");
+            System.Console.WriteLine(" triangle. Some positions are easier to solve for than others! Now, with n = 7, there are some positions where the puzzle is just not");
+            System.Console.WriteLine("solvable. I have included this bit of error checking in my solution. No point in this churning away if there's no solution.");
 
             Setup();
 
@@ -85,7 +87,6 @@ namespace AI_Assignment_1
                 System.Console.WriteLine("Unsolveable!");
                 if (CheckValid(setup[0], setup[1], setup[2])) //if there IS a general solution, solve for it.
                 {
-
                     System.Console.WriteLine("Solve for the general solution? y/n");
                     solve_gen = System.Console.ReadKey().KeyChar;
                     SolveGeneral(setup[0], setup[1], setup[2]);
